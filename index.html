@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CFA Level 1 180-Day Study Tracker</title>
+    <style>
+        :root {
+            --bg-main: #f8fafc;
+            --text-main: #1e293b;
+            --primary: #1d4ed8;
+            --success: #10b981;
+            --border: #e2e8f0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            padding: 2rem max(1rem, 5vw);
+        }
+        header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .title-group h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -0.025em;
+        }
+        .title-group p {
+            color: #64748b;
+            margin: 0.5rem 0 0 0;
+        }
+        .stats-grid {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            min-width: 120px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+            margin-top: 0.25rem;
+            font-weight: 500;
+        }
+        .progress-track {
+            width: 100%;
+            height: 10px;
+            background-color: var(--border);
+            border-radius: 9999px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: var(--success);
+            width: 0%;
+            transition: width 0.3s ease-in-out;
+        }
+        .filter-menu {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.75rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background-color: #ffffff;
+            color: #475569;
+            border: 1px solid var(--border);
+            border-radius: 9999px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .filter-btn.active {
+            background-color: #1e293b;
+            color: #ffffff;
+            border-color: #1e293b;
+        }
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        .day-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+        }
+        .day-card.completed {
+            border-color: var(--success);
+            background-color: #f0fdf4;
+        }
+        .card-top {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .day-badge {
+            background: #1e293b;
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+        }
+        .topic-badge {
+            background: #dbeafe;
+            color: #1e40af;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+        }
+        .hours-badge {
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            margin-left: auto;
+        }
+        .source-text {
+            font-size: 0.85rem;
+            color: #475569;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed var(--border);
+        }
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .action-item p {
+            margin: 0;
+            font-size: 0.925rem;
+            line-height: 1.5;
+        }
+        .action-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #64748b;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.15rem;
+        }
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+        .hint-text {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="title-group">
+            <h1>CFA Level 1 Study Tracker</h1>
+            <p>180-Day Structured Schweser Plan (2026 Curriculum)</p>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-value" id="progress-pct">0%</span>
+                <span class="stat-label">Progress</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value" id="days-count">0 / 180</span>
+                <span class="stat-label">Days Done</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-track">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <nav class="filter-menu">
+        <button class="filter-btn active" onclick="filterPhase('All', this)">Full 180 Days</button>
+        <button class="filter-btn" onclick="filterPhase('P1', this)">Phase 1 (1–45)</button>
+        <button class="filter-btn" onclick="filterPhase('P2', this)">Phase 2 (46–100)</button>
+        <button class="filter-btn" onclick="filterPhase('P3', this)">Phase 3 (101–135)</button>
+        <button class="filter-btn" onclick="filterPhase('P4', this)">Phase 4 (136–155)</button>
+        <button class="filter-btn" onclick="filterPhase('P5', this)">Phase 5 (156–180)</button>
+    </nav>
+
+    <main class="cards-grid" id="cards-container"></main>
+
+    <script>
+        // Sample structural data baseline to seed your visual framework immediately
+        const cfaSchedule = [
+            { "Day": 1, "Topic": "Quantitative Methods", "Schweser_Module": "Module 1.1", "Study_Action": "Format your TI BA II Plus calculator and master basic Time Value of Money (TVM) layouts.", "Practice_Task": "Complete 15 fundamental TVM equations inside your Schweser question engine.", "Daily_Target_Hours": 2.0, "Website_UI_Hint": "Calculator Asset", "Phase": "P1" },
+            { "Day": 2, "Topic": "Quantitative Methods", "Schweser_Module": "Module 1.2", "Study_Action": "Deep dive into Net Present Value (NPV) vs Internal Rate of Return (IRR) rules.", "Practice_Task": "Execute 10 corporate capital decision entries via your physical calculator tool.", "Daily_Target_Hours": 2.0, "Website_UI_Hint": "Formula Deck", "Phase": "P1" },
+            { "Day": 46, "Topic": "Fixed Income", "Schweser_Module": "Module 12.1", "Study_Action": "Analyze standard corporate bond structures and calculate basic yields to maturity.", "Practice_Task": "Solve 12 end-of-module fixed income cash valuation matrices.", "Daily_Target_Hours": 2.5, "Website_UI_Hint": "Bond Yield Table", "Phase": "P2" },
+            { "Day": 136, "Topic": "Ethical Standards", "Schweser_Module": "Module 28.1", "Study_Action": "Study Code of Ethics and Professional Standards I-VII framework completely.", "Practice_Task": "Complete 20 situational case analysis prompt sets in the ecosystem.", "Daily_Target_Hours": 3.0, "Website_UI_Hint": "Ethics Check", "Phase": "P4" }
+        ];
+
+        // Seed remaining milestone items programmatically to guarantee file structure continuity
+        for (let i = 3; i <= 180; i++) {
+            if (i === 46 || i === 136) continue;
+            let currentPhase = "P1";
+            let topicName = "Quantitative Methods / FSA Foundations";
+            if (i > 45 && i <= 100) { currentPhase = "P2"; topicName = "Fixed Income & High Assets"; }
+            else if (i > 100 && i <= 135) { currentPhase = "P3"; topicName = "Satellites & Practical Modules"; }
+            else if (i > 135 && i <= 155) { currentPhase = "P4"; topicName = "Ethical Standards Intensive"; }
+            else if (i > 155) { currentPhase = "P5"; topicName = "Final Full Mock Exam Windows"; }
+
+            cfaSchedule.push({
+                "Day": i,
+                "Topic": topicName,
+                "Schweser_Module": `Module Session Reference ${i}`,
+                "Study_Action": `Review comprehensive core definitions and formulas mapped to Day ${i} goals.`,
+                "Practice_Task": `Complete custom review quiz entries within your study application profile.`,
+                "Daily_Target_Hours": i > 155 ? 4.5 : 2.0,
+"Website_UI_Hint": "Interactive Module Block","Phase": currentPhase});}cfaSchedule.sort((a,b) => a.Day - b.Day);let completedDays = JSON.parse(localStorage.getItem('cfa_web_done')) || [];let currentFilter = 'All';function renderDashboard() {const container = document.getElementById('cards-container');container.innerHTML = '';const filtered = cfaSchedule.filter(d => currentFilter === 'All' || d.Phase === currentFilter);filtered.forEach(day => {const isDone = completedDays.includes(day.Day);const card = document.createElement('div');card.className = day-card ${isDone ? 'completed' : ''};card.innerHTML = `Day ${day.Day}${day.Topic}⏱️ ${day.Daily_Target_Hours}hSource: ${day.Schweser_Module}Core Reading${day.Study_Action}Practice Execution${day.Practice_Task}💡 ${day.Website_UI_Hint}`;container.appendChild(card);});// Update statsconst pct = Math.round((completedDays.length / cfaSchedule.length) * 100);document.getElementById('progress-pct').innerText = pct + '%';document.getElementById('days-count').innerText = ${completedDays.length} / ${cfaSchedule.length};document.getElementById('progress-bar').style.width = pct + '%';}window.toggleDay = function(dayNum) {if (completedDays.includes(dayNum)) {completedDays = completedDays.filter(id => id !== dayNum);} else {completedDays.push(dayNum);}localStorage.setItem('cfa_web_done', JSON.stringify(completedDays));renderDashboard();}window.filterPhase = function(phaseCode, btn) {currentFilter = phaseCode;document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));btn.classList.add('active');renderDashboard();}renderDashboard();
