@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CFA Level 1 Master Study Tracker - Full 5-Book Suite</title>
+    <title>CFA Level 1 Master Dashboard & Active Quiz Hub</title>
     <style>
         :root {
             --bg-main: #f8fafc;
             --text-main: #1e293b;
             --primary: #1d4ed8;
             --success: #10b981;
+            --error: #ef4444;
             --border: #e2e8f0;
             --quant: #3b82f6;
             --fsa: #0ea5e9;
@@ -74,6 +75,101 @@
             margin-top: 0.25rem;
             font-weight: 500;
         }
+
+        /* NEW: Quiz Panel Layout Styles */
+        .quiz-panel {
+            background: #ffffff;
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 1.75rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+        .quiz-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .quiz-question {
+            font-size: 1.05rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 1.25rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+        .option-btn {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: left;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .option-btn:hover:not(:disabled) {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+        .option-btn.selected-correct {
+            background-color: #d1fae5;
+            border-color: var(--success);
+            color: #065f46;
+        }
+        .option-btn.selected-wrong {
+            background-color: #fee2e2;
+            border-color: var(--error);
+            color: #991b1b;
+        }
+        .quiz-feedback {
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.925rem;
+            line-height: 1.5;
+            margin-bottom: 1.25rem;
+            display: none;
+        }
+        .quiz-feedback.correct {
+            display: block;
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+        .quiz-feedback.wrong {
+            display: block;
+            background: #fff5f5;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+        .next-quiz-btn {
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: none;
+        }
+
         .progress-track {
             width: 100%;
             height: 10px;
@@ -235,36 +331,4 @@
             </div>
             <div class="stat-card">
                 <span class="stat-value" id="days-count">0 / 180</span>
-                <span class="stat-label">Days Cleared</span>
-            </div>
-        </div>
-    </header>
-
-    <div class="progress-track">
-        <div class="progress-bar" id="progress-bar"></div>
-    </div>
-
-    <nav class="filter-menu">
-        <button class="filter-btn active" onclick="filterPhase('All', this)">Full 180 Days</button>
-        <button class="filter-btn" onclick="filterPhase('Quant', this)">Quant Methods (B1)</button>
-        <button class="filter-btn" onclick="filterPhase('FSA', this)">Financial Analysis (B3)</button>
-        <button class="filter-btn" onclick="filterPhase('Fixed', this)">Fixed Income (B4)</button>
-        <button class="filter-btn" onclick="filterPhase('Equity', this)">Equity (B3)</button>
-        <button class="filter-btn" onclick="filterPhase('Deriv', this)">Derivatives (B4)</button>
-        <button class="filter-btn" onclick="filterPhase('Alt', this)">Alternative Inv (B5)</button>
-        <button class="filter-btn" onclick="filterPhase('Port', this)">Portfolio Mgmt (B2/B5)</button>
-        <button class="filter-btn" onclick="filterPhase('Ethics', this)">Ethics (B5)</button>
-    </nav>
-
-    <main class="cards-grid" id="cards-container"></main>
-
-    <script>
-        const cfaSchedule = [
-            // --- BOOK 1: QUANTITATIVE METHODS ---
-            { "Day": 1, "Topic": "Quantitative Methods", "Badge": "badge-quant", "Schweser_Module": "Book 1 / Reading 1 / Module 1.1", "Study_Action": "Study required returns and premium parameters. Differentiate nominal from real risk-free rates.", "Practice_Task": "Solve Module Quiz 1.1 tracking default risk, liquidity profiles, and maturity risk premiums.", "Daily_Target_Hours": 2.0, "Website_UI_Hint": "Calculator Setup", "Phase": "Quant" },
-            { "Day": 2, "Topic": "Quantitative Methods", "Badge": "badge-quant", "Schweser_Module": "Book 1 / Reading 1 / Module 1.2", "Study_Action": "Examine Time-Weighted vs Money-Weighted returns. Note the distortion properties of external cash contributions.", "Practice_Task": "Compute Net Present Value (NPV) and internal rate of return metrics via register keys.", "Daily_Target_Hours": 2.0, "Website_UI_Hint": "TWR vs MWR Formula", "Phase": "Quant" },
-
-            // --- BOOK 3: FINANCIAL STATEMENT ANALYSIS (FSA) ---
-            { "Day": 15, "Topic": "Financial Statement Analysis", "Badge": "badge-fsa", "Schweser_Module": "Book 3 / Reading 29 / Module 29.1", "Study_Action": "Trace the 6 steps in the financial analysis framework. Analyze the roles of regulatory footprints (FASB, IASB, IOSCO).", "Practice_Task": "Differentiate footnote content data logs from management discussion and analysis statements (MD&A).", "Daily_Target_Hours": 2.0, "Website_UI_Hint": "Audit Review Table", "Phase": "FSA" },
-            // --- BOOK 4: FIXED INCOME ---{ "Day": 46, "Topic": "Fixed Income", "Badge": "badge-fixed", "Schweser_Module": "Book 4 / Reading 49 / Module 49.1", "Study_Action": "Deconstruct fixed-income architecture: maturity structures, par values, coupons, senior/junior rankings, and indentures.", "Practice_Task": "Identify standard affirmative vs negative covenants (negative pledge, incurrence thresholds) inside sample indentures.", "Daily_Target_Hours": 2.0, "Website_UI_Hint": "Indenture Contract Guide", "Phase": "Fixed" },// --- BOOK 3: EQUITY INVESTMENTS ---{ "Day": 110, "Topic": "Equity Investments", "Badge": "badge-equity", "Schweser_Module": "Book 3 / Reading 41 / Module 41.1-41.3", "Study_Action": "Review Market Organization and Structure. Study classifications of assets, intermediaries, and leverage positions.", "Practice_Task": "Calculate the return on a margin transaction and the exact stock price triggering a margin call.", "Daily_Target_Hours": 2.5, "Website_UI_Hint": "Margin Call Calculator", "Phase": "Equity" },// --- BOOK 4: DERIVATIVES ---{ "Day": 140, "Topic": "Derivatives", "Badge": "badge-deriv", "Schweser_Module": "Book 4 / Reading 76 / Module 76.1", "Study_Action": "Master Option Replication utilizing standard European Put-Call Parity boundaries.", "Practice_Task": "Replicate fiduciary call assets and protective put parameters to isolate mispriced target values.", "Daily_Target_Hours": 3.0, "Website_UI_Hint": "Put-Call Parity Matrix", "Phase": "Deriv" },// --- BOOK 5: ALTERNATIVE INVESTMENTS ---{ "Day": 150, "Topic": "Alternative Investments", "Badge": "badge-alt", "Schweser_Module": "Book 5 / Reading 78 / Module 78.1", "Study_Action": "Analyze alternative categories: private capital, hedge funds, real assets. Note illiquidity and specialized deployment.", "Practice_Task": "Identify GP/LP roles, limited partnership constraints, accredited conditions, and side letter exceptions.", "Daily_Target_Hours": 2.0, "Website_UI_Hint": "LP Governance Matrix", "Phase": "Alt" },{ "Day": 151, "Topic": "Alternative Investments", "Badge": "badge-alt", "Schweser_Module": "Book 5 / Reading 78 / Module 78.1 (Cont.)", "Study_Action": "Master fee structures: management fees (AUM vs committed capital), dry powder tracking, hard/soft hurdles.", "Practice_Task": "Isolate deal-by-deal (American) waterfalls from whole-of-fund (European) distributions and clawback rules.", "Daily_Target_Hours": 2.5, "Website_UI_Hint": "Waterfall Distribution Math", "Phase": "Alt" },{ "Day": 152, "Topic": "Alternative Investments", "Badge": "badge-alt", "Schweser_Module": "Book 5 / Reading 79 / Module 79.1", "Study_Action": "Evaluate performance appraisal parameters: J-Curve lifecycles, leverage effects, and fair value hierarchies (Levels 1, 2, 3).", "Practice_Task": "Identify database distortions resulting from survivorship bias and backfill anomalies.", "Daily_Target_Hours": 2.0, "Website_UI_Hint": "J-Curve Performance Curve", "Phase": "Alt" },{ "Day": 153, "Topic": "Alternative Investments", "Badge": "badge-alt", "Schweser_Module": "Book 5 / Reading 80-82", "Study_Action": "Study Private Capital (LBO buyouts, VC stages, mezzanine debt) vs Real Assets (Core/Value-add REITs, MLPs, TIMOs).", "Practice_Task": "Evaluate diversification paths using raw land, timberland, and brownfield vs greenfield infrastructure.", "Daily_Target_Hours": 2.5, "Website_UI_Hint": "Real Estate Quadrant Filter", "Phase": "Alt" },{ "Day": 154, "Topic": "Alternative Investments", "Badge": "badge-alt", "Schweser_Module": "Book 5 / Reading 83 & 84", "Study_Action": "Examine Hedge Fund strategies alongside Digital Assets (Distributed Ledgers, blockchain apps).", "Practice_Task": "Calculate complex fund-of-funds layers under double tier management fees ('1 and 10' net filters).", "Daily_Target_Hours": 2.5, "Website_UI_Hint": "Crypto Asset Disclosures", "Phase": "Alt" },// --- BOOK 2 & 5: PORTFOLIO MANAGEMENT ---{ "Day": 160, "Topic": "Portfolio Management", "Badge": "badge-port", "Schweser_Module": "Book 5 / Reading 85 & 86", "Study_Action": "Deconstruct steps in the portfolio management loop. Define DB vs DC retirement lines and written IPS targets.", "Practice_Task": "Distinguish an investor's emotional willingness to accept asset variance from objective financial capacity bounds.", "Daily_Target_Hours": 2.0, "Website_UI_Hint": "IPS Constraint Deck", "Phase": "Port" },{ "Day": 161, "Topic": "Portfolio Management", "Badge": "badge-port", "Schweser_Module": "Book 5 / Reading 87 & 88", "Study_Action": "Contrast Cognitive Errors against Emotional Biases. Isolate risk budgeting from core risk governance frameworks.", "Practice_Task": "Differentiate financial risks (market, credit) from non-financial risks (operational, regulatory).", "Daily_Target_Hours": 2.0, "Website_UI_Hint": "Behavioral Finance Flag", "Phase": "Port" },// --- BOOK 5: ETHICAL AND PROFESSIONAL STANDARDS ---{ "Day": 170, "Topic": "Ethical Standards", "Badge": "badge-ethics", "Schweser_Module": "Book 5 / Reading 89 & 90", "Study_Action": "Analyze ethics vs legal baselines. Learn the 6 components of the Code and 7 Standards of Professional Conduct.", "Practice_Task": "Complete professional conduct enforcement workflow charts detailing disciplinary program rules.", "Daily_Target_Hours": 2.5, "Website_UI_Hint": "Standards Compliance Map", "Phase": "Ethics" },{ "Day": 171, "Topic": "Ethical Standards", "Badge": "badge-ethics", "Schweser_Module": "Book 5 / Reading 91 / Modules 91.1-91.4", "Study_Action": "Deep dive into Standard I (Professionalism: Knowledge, Independence, Misrepresentation) and Standard II (Market Integrity).", "Practice_Task": "Grind situational case profiles checking firewall safeguards around selective disclosure channels.", "Daily_Target_Hours": 3.0, "Website_UI_Hint": "Standard I-II Practice Bank", "Phase": "Ethics" },{ "Day": 172, "Topic": "Ethical Standards", "Badge": "badge-ethics", "Schweser_Module": "Book 5 / Reading 91 / Modules 91.5-91.9", "Study_Action": "Deep dive into Standard III (Duties to Clients), Standard IV (Duties to Employers), and Standards V-VII frameworks.", "Practice_Task": "Audit soft dollar allocation accounts to preserve absolute client loyalty metrics.", "Daily_Target_Hours": 3.0, "Website_UI_Hint": "Standard III-VII Case Review", "Phase": "Ethics" },{ "Day": 173, "Topic": "Ethical Standards", "Badge": "badge-ethics", "Schweser_Module": "Book 5 / Reading 92 / Module 92.1", "Study_Action": "Master Global Investment Performance Standards (GIPS). Learn compliance metrics, verification, and firm boundaries.", "Practice_Task": "Isolate composite performance presentation criteria designed to eliminate survivorship bias manipulation.", "Daily_Target_Hours": 2.5, "Website_UI_Hint": "GIPS Presentation Panel", "Phase": "Ethics" }];// Structural pad matrix to secure 180 continuous card layout cellsconst mappedDays = cfaSchedule.map(d => d.Day);for (let i = 1; i <= 180; i++) {if (mappedDays.includes(i)) continue;let phase = "Other"; let topic = "Ecosystem Integration Frame"; let bClass = "badge-quant";if (i > 2 && i <= 14) { phase = "Quant"; topic = "Quant Methods Study Track"; bClass = "badge-quant"; }else if (i > 16 && i <= 45) { phase = "FSA"; topic = "Financial Reporting Loops"; bClass = "badge-fsa"; }else if (i > 45 && i <= 69) { phase = "Fixed"; topic = "Fixed Income Target Blocks"; bClass = "badge-fixed"; }else if (i > 69 && i <= 109) { phase = "Econ"; topic = "Economics Structural Revision"; bClass = "badge-econ"; }else if (i > 110 && i <= 125) { phase = "Equity"; topic = "Equity Investments Calibration"; bClass = "badge-equity"; }else if (i > 125 && i < 140) { phase = "Port"; topic = "Portfolio Foundations Synthesis"; bClass = "badge-port"; }else if (i > 145 && i < 150) { phase = "Deriv"; topic = "Derivatives Payout Review"; bClass = "badge-deriv"; }else if (i > 154 && i < 160) { phase = "Alt"; topic = "Alternative Assets Revisions"; bClass = "badge-alt"; }else if (i >= 162 && i < 170) { phase = "Port"; topic = "Risk Governance Loops"; bClass = "badge-port"; }else if (i > 173) { phase = "Ethics"; topic = "Final Review & Mock Diagnostics"; bClass = "badge-ethics"; }cfaSchedule.push({"Day": i, "Topic": topic, "Badge": bClass,"Schweser_Module": Ecosystem Session Module ${i},"Study_Action": Review structural definitions, core formulas, and candidate tasks assigned to Day ${i}.,"Practice_Task": Execute sample multiple-choice questions matching target Level 1 constraints.,"Daily_Target_Hours": i > 173 ? 4.5 : 2.0, "Website_UI_Hint": "Ecosystem Study Node", "Phase": phase});}cfaSchedule.sort((a,b) => a.Day - b.Day);let completedDays = JSON.parse(localStorage.getItem('cfa_web_done')) ||;let currentFilter = 'All';function renderDashboard() {const container = document.getElementById('cards-container');container.innerHTML = '';const filtered = cfaSchedule.filter(d => currentFilter === 'All' || d.Phase === currentFilter);filtered.forEach(day => {const isDone = completedDays.includes(day.Day);const card = document.createElement('div');card.className = day-card ${isDone ? 'completed' : ''};card.innerHTML = `Day ${day.Day}${day.Topic}⏱️ ${day.Daily_Target_Hours}hSource: ${day.Schweser_Module}Study Guide${day.Study_Action}Practice Checklist${day.Practice_Task}💡 Key: ${day.Website_UI_Hint}`;container.appendChild(card);});const pct = Math.round((completedDays.length / cfaSchedule.length) * 100);document.getElementById('progress-pct').innerText = pct + '%';document.getElementById('days-count').innerText = ${completedDays.length} / ${cfaSchedule.length};document.getElementById('progress-bar').style.width = pct + '%';}window.toggleDay = function(dayNum) {if (completedDays.includes(dayNum)) {completedDays = completedDays.filter(id => id !== dayNum);} else {completedDays.push(dayNum);}localStorage.setItem('cfa_web_done', JSON.stringify(completedDays));renderDashboard();}window.filterPhase = function(phaseCode, btn) {currentFilter = phaseCode;document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));btn.classList.add('active');renderDashboard();}renderDashboard();
-
+Days ClearedFull 180 DaysQuant Methods (B1)Financial Analysis (B3)Fixed Income (B4)Equity (B3)Derivatives (B4)Alternative Inv (B5)Portfolio Mgmt (B2/B5)Ethics (B5)// Database array consisting of direct question text from your Schweser notesconst schweserQuizDatabase = [{"topic": "Quantitative Methods","badge": "badge-quant","source": "Book 1 / Module Quiz 1.1","question": "An interest rate from which the inflation premium has been subtracted is best known as a:","options": ("A. Real interest rate.", "B. Risk-free interest rate.", "C. Real risk-free interest rate."),"correct": 0,"explanation": "CORRECT! Real interest rates are defined as those nominal parameters from which inflation adjustments have been mathematically removed (Page 16)."},{"topic": "Quantitative Methods","badge": "badge-quant","source": "Book 1 / Module Quiz 1.2","question": "An investor buys a share of stock for $40 at time t = 0, buys another share for $50 at t = 1, and sells both shares for $60 each at t = 2. The stock paid a dividend of $1 per share at t = 1 and t = 2. The time-weighted rate of return on the investment for the period is closest to:","options": ("A. 24.7%.", "B. 25.7%.", "C. 26.8%."),"correct": 1,"explanation": "CORRECT! HPR1 = (50 + 1) / 40 - 1 = 27.5%. HPR2 = (120 + 2) / 100 - 1 = 22%. Time-weighted return = ((1.275)(1.22))^0.5 - 1 = 25.74% (Page 26)."},{"topic": "Financial Statement Analysis","badge": "badge-fsa","source": "Book 3 / Module Quiz 29.1","question": "If an auditor finds that a company’s financial statements have made a specific exception to applicable accounting principles, she is most likely to issue a:","options": ("A. Dissenting opinion.", "B. Cautionary note.", "C. Qualified opinion."),"correct": 2,"explanation": "CORRECT! A qualified opinion is issued when the financial records contain isolated, clear exceptions to default accounting standards (Page 22)."},{"topic": "Financial Statement Analysis","badge": "badge-fsa","source": "Book 3 / Module Quiz 30.2","question": "Red Company immediately expenses its development costs, while Black Company capitalizes its development costs. All else equal, Red Company will report a higher:","options": ("A. Operating cash flow (CFO) than Black Company.", "B. Asset turnover than Black Company.", "C. Smoothness of reported earnings over multiple periods."),"correct": 1,"explanation": "CORRECT! Because Red Company expenses items immediately, its total assets are smaller, resulting in a higher Asset Turnover calculation (Sales / Assets) in Year 1 (Page 36)."},{"topic": "Fixed Income","badge": "badge-fixed","source": "Book 4 / Module Quiz 49.1","question": "A clause in a bond indenture that requires the borrower to provide timely financial reports to bondholders is most accurately described as a(n):","options": ("A. Trust deed.", "B. Negative covenant.", "C. Affirmative covenant."),"correct": 2,"explanation": "CORRECT! Affirmative covenants specify necessary obligations that an issuer must execute periodically (Page 19)."},{"topic": "Fixed Income","badge": "badge-fixed","source": "Book 4 / Module Quiz 50.1","question": "An investor buys a pure-discount bond, holds it to maturity, and receives its par value. For tax purposes, the systematic increase in the bond’s value toward par is treated as:","options": ("A. A capital gain.", "B. Interest income.", "C. Tax-exempt income."),"correct": 1,"explanation": "CORRECT! Tax jurisdictions treat original issue discount (OID) appreciation as taxable interest income accrued over the asset tenor (Page 29)."},{"topic": "Alternative Investments","badge": "badge-alt","source": "Book 5 / Module Quiz 78.1","question": "For an investor in a private equity fund, which of the following limited partnership rules is considered the LEAST advantageous?","options": ("A. A clawback provision.", "B. A European-style waterfall provision.", "C. An American-style waterfall provision."),"correct": 2,"explanation": "CORRECT! An American-style (deal-by-deal) waterfall structure allows the general partner to collect incentive distributions early before returning 100% of capital investments to limited partners (Page 16)."}];// 180-Day Study Schedule Database arrayconst cfaSchedule = [{ "Day": 1, "Topic": "Quantitative Methods", "Badge": "badge-quant", "Schweser_Module": "Book 1 / Reading 1 / Module 1.1", "Study_Action": "Study required returns and premium parameters. Differentiate nominal from real risk-free rates.", "Practice_Task": "Solve Module Quiz 1.1 tracking default risk, liquidity profiles, and maturity risk premiums.", "Daily_Target_Hours": 2.0, "Website_UI_Hint": "Calculator Setup", "Phase": "Quant" },{ "Day": 2, "Topic": "Quantitative Methods", "Badge": "badge-quant", "Schweser_Module": "Book 1 / Reading 1 / Module 1.2", "Study_Action": "Examine Time-Weighted vs Money-Weighted returns. Note the distortion properties of external cash contributions.", "Practice_Task": "Compute Net Present Value (NPV) and internal rate of return metrics via register keys.", "Daily_Target_Hours": 2.0, "Website_UI_Hint": "TWR vs MWR Formula", "Phase": "Quant" },{ "Day": 15, "Topic": "Financial Statement Analysis", "Badge": "badge-fsa", "Schweser_Module": "Book 3 / Reading 29 / Module 29.1", "Study_Action": "Trace the 6 steps in the financial analysis framework. Analyze the roles of regulatory footprints (FASB, IASB, IOSCO).", "Practice_Task": "Differentiate footnote content data logs from management discussion and analysis statements (MD&A).", "Daily_Target_Hours": 2.0, "Website_UI_Hint": "Audit Review Table", "Phase": "FSA" },{ "Day": 46, "Topic": "Fixed Income", "Badge": "badge-fixed", "Schweser_Module": "Book 4 / Reading 49 / Module 49.1", "Study_Action": "Deconstruct fixed-income architecture: maturity structures, par values, coupons, senior/junior rankings, and indentures.", "Practice_Task": "Identify standard affirmative vs negative covenants (negative pledge, incurrence thresholds) inside sample indentures.", "Daily_Target_Hours": 2.0, "Website_UI_Hint": "Indenture Contract Guide", "Phase": "Fixed" },{ "Day": 110, "Topic": "Equity Investments", "Badge": "badge-equity", "Schweser_Module": "Book 3 / Reading 41 / Module 41.1-41.3", "Study_Action": "Review Market Organization and Structure. Study classifications of assets, intermediaries, and leverage positions.", "Practice_Task": "Calculate the return on a margin transaction and the exact stock price triggering a margin call.", "Daily_Target_Hours": 2.5, "Website_UI_Hint": "Margin Call Calculator", "Phase": "Equity" },{ "Day": 140, "Topic": "Derivatives", "Badge": "badge-deriv", "Schweser_Module": "Book 4 / Reading 76 / Module 76.1", "Study_Action": "Master Option Replication utilizing standard European Put-Call Parity boundaries.", "Practice_Task": "Replicate fiduciary call assets and protective put parameters to isolate mispriced target values.", "Daily_Target_Hours": 3.0, "Website_UI_Hint": "Put-Call Parity Matrix", "Phase": "Deriv" },{ "Day": 150, "Topic": "Alternative Investments", "Badge": "badge-alt", "Schweser_Module": "Book 5 / Reading 78 / Module 78.1", "Study_Action": "Analyze alternative categories: private capital, hedge funds, real assets. Note illiquidity and specialized deployment.", "Practice_Task": "Identify GP/LP roles, limited partnership constraints, accredited conditions, and side letter exceptions.", "Daily_Target_Hours": 2.0, "Website_UI_Hint": "LP Governance Matrix", "Phase": "Alt" }];// Seed padded array modules dynamically to bridge 180 day matrix limitsconst mappedDays = cfaSchedule.map(d => d.Day);for (let i = 1; i <= 180; i++) {if (mappedDays.includes(i)) continue;let phase = "Other"; let topic = "Ecosystem Synthesis Loop"; let bClass = "badge-quant";if (i > 2 && i <= 14) { phase = "Quant"; topic = "Quant Methods Revision Room"; bClass = "badge-quant"; }else if (i > 16 && i <= 45) { phase = "FSA"; topic = "Financial Analysis Core Block"; bClass = "badge-fsa"; }else if (i > 46 && i <= 69) { phase = "Fixed"; topic = "Fixed Income Asset Valuation"; bClass = "badge-fixed"; }else if (i > 69 && i <= 109) { phase = "Econ"; topic = "Macroeconomic Trade Balances"; bClass = "badge-econ"; }else if (i > 110 && i <= 125) { phase = "Equity"; topic = "Equity Return Frameworks"; bClass = "badge-equity"; }else if (i > 125 && i < 140) { phase = "Port"; topic = "Risk Parameter Foundations"; bClass = "badge-port"; }else if (i > 140 && i < 150) { phase = "Deriv"; topic = "Derivatives Cost of Carry"; bClass = "badge-deriv"; }else if (i > 150 && i < 160) { phase = "Alt"; topic = "Alternative Assets Risk Management"; bClass = "badge-alt"; }else if (i >= 160 && i < 170) { phase = "Port"; topic = "IPS Capital Allocations"; bClass = "badge-port"; }else if (i >= 170) { phase = "Ethics"; topic = "Ethical Standards Enforcement"; bClass = "badge-ethics"; }cfaSchedule.push({"Day": i, "Topic": topic, "Badge": bClass,"Schweser_Module": Ecosystem Session Module ${i},"Study_Action": Review structural definitions, core formulas, and candidate tasks assigned to Day ${i}.,"Practice_Task": Execute sample multiple-choice questions matching target Level 1 constraints.,"Daily_Target_Hours": 2.0, "Website_UI_Hint": "Ecosystem Study Node", "Phase": phase});}cfaSchedule.sort((a,b) => a.Day - b.Day);let completedDays = JSON.parse(localStorage.getItem('cfa_web_done')) ||;let currentFilter = 'All';let currentQuizIndex = 0;// NEW: Active Recall Quiz Engine Logic Functionsfunction loadRandomQuestion() {currentQuizIndex = Math.floor(Math.random() * schweserQuizDatabase.length);const questionData = schweserQuizDatabase(currentQuizIndex);// Set Quiz metadata textconst topicBadge = document.getElementById('quiz-topic-badge');topicBadge.innerText = questionData.topic;topicBadge.className = topic-badge ${questionData.badge};document.getElementById('quiz-source-ref').innerText = questionData.source;document.getElementById('quiz-question-text').innerText = questionData.question;// Render option buttons safelyconst optionsContainer = document.getElementById('quiz-options-container');optionsContainer.innerHTML = '';questionData.options.forEach((option, idx) => {const button = document.createElement('button');button.className = 'option-btn';button.innerText = option;button.onclick = () => evaluateQuizAnswer(idx, button);optionsContainer.appendChild(button);});// Hide feedback tracking components until input trigger occursdocument.getElementById('quiz-feedback-box').style.display = 'none';document.getElementById('next-question-btn').style.display = 'none';}function evaluateQuizAnswer(selectedIndex, selectedBtn) {const questionData = schweserQuizDatabase(currentQuizIndex);const feedbackBox = document.getElementById('quiz-feedback-box');const allOptionButtons = document.querySelectorAll('.option-btn');// Freeze option click events following input registrationallOptionButtons.forEach(btn => btn.disabled = true);if (selectedIndex === questionData.correct) {selectedBtn.classList.add('selected-correct');feedbackBox.className = 'quiz-feedback correct';feedbackBox.innerText = questionData.explanation;} else {selectedBtn.classList.add('selected-wrong');allOptionButtons(questionData.correct).classList.add('selected-correct');feedbackBox.className = 'quiz-feedback wrong';feedbackBox.innerText = INCORRECT. ${questionData.explanation};}document.getElementById('next-question-btn').style.display = 'inline-block';}function renderDashboard() {const container = document.getElementById('cards-container');container.innerHTML = '';const filtered = cfaSchedule.filter(d => currentFilter === 'All' || d.Phase === currentFilter);filtered.forEach(day => {const isDone = completedDays.includes(day.Day);const card = document.createElement('div');card.className = day-card ${isDone ? 'completed' : ''};card.innerHTML = `Day ${day.Day}${day.Topic}⏱️ ${day.Daily_Target_Hours}hSource: ${day.Schweser_Module}Study Guide${day.Study_Action}Practice Checklist${day.Practice_Task}💡 Key: ${day.Website_UI_Hint}`;container.appendChild(card);});const pct = Math.round((completedDays.length / cfaSchedule.length) * 100);document.getElementById('progress-pct').innerText = pct + '%';document.getElementById('days-count').innerText = ${completedDays.length} / ${cfaSchedule.length};document.getElementById('progress-bar').style.width = pct + '%';}window.toggleDay = function(dayNum) {if (completedDays.includes(dayNum)) {completedDays = completedDays.filter(id => id !== dayNum);} else {completedDays.push(dayNum);}localStorage.setItem('cfa_web_done', JSON.stringify(completedDays));renderDashboard();}window.filterPhase = function(phaseCode, btn) {currentFilter = phaseCode;document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));btn.classList.add('active');renderDashboard();}// Bootstrapping initialization routinesloadRandomQuestion();renderDashboard();
